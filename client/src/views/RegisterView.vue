@@ -4,9 +4,7 @@
   >
     <div class="w-full md:w-[45%] lg:w-1/2 px-4 py-12 sm:px-6 sm:py-16">
       <div class="max-w-lg mx-auto text-center">
-        <h1 class="text-lg font-semibold lg:text-xl">
-          Login to your account..
-        </h1>
+        <h1 class="text-lg font-semibold lg:text-xl">Register new account..</h1>
         <p
           class="mt-2 text-sm font-normal lg:text-base text-slate-900 drop-shadow-sm"
         >
@@ -15,7 +13,7 @@
         </p>
       </div>
       <div class="max-w-md mx-auto mt-8 space-y-4">
-        <form v-on:submit.prevent="doLogin">
+        <form v-on:submit.prevent="doRegister">
           <div>
             <label for="email" class="block text-sm font-normal capitalize"
               >email</label
@@ -48,13 +46,13 @@
             class="grid items-center justify-end grid-cols-1 mt-4 sm:flex gap-y-3 sm:gap-x-2"
           >
             <RouterLink
-              to="/register"
+              to="/login"
               class="col-span-1 sm:col-span-2 mr-1 underline flex justify-end cursor-pointer text-[.8rem] text-gray-600 hover:text-gray-900 rounded-md focus:outline-none"
-              >Register new account?</RouterLink
+              >Already have an account?</RouterLink
             >
             <div class="col-span-1">
               <div class="flex items-center justify-end">
-                <CustomButton v-bind:buttonInfo="'Login'" />
+                <CustomButton v-bind:buttonInfo="'Register'" />
               </div>
             </div>
           </div>
@@ -87,9 +85,9 @@ export default {
     };
   },
   methods: {
-    ...mapActions(useRootStore, ["handleLogin"]),
-    doLogin() {
-      this.handleLogin(this.form);
+    ...mapActions(useRootStore, ["handleRegister"]),
+    doRegister() {
+      this.handleRegister(this.form);
       // console.log(this.form);
     },
   },

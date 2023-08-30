@@ -14,7 +14,7 @@
               xmlns:xlink="http://www.w3.org/1999/xlink"
               xmlns:svgjs="http://svgjs.dev/svgjs"
               viewBox="0 0 1000 247"
-              class="w-auto h-9"
+              class="w-auto h-8"
             >
               <g
                 transform="matrix(1,0,0,1,-0.6056348047761162,0.3525084081460079)"
@@ -161,7 +161,7 @@
                         role="none"
                       ></div>
                     </div>
-                    <div>
+                    <div v-if="!isLoggedIn">
                       <RouterLink to="/login">
                         <MenuItem v-slot="{ active }">
                           <div
@@ -181,25 +181,27 @@
                           </div>
                         </MenuItem>
                       </RouterLink>
-                      <MenuItem v-slot="{ active }">
-                        <div
-                          :class="[
-                            active
-                              ? 'bg-slate-100 text-slate-800'
-                              : 'text-slate-700',
-                            'group font-medium flex w-full items-center rounded-md px-2 py-2 text-sm',
-                          ]"
-                        >
-                          <NewspaperIcon
-                            :active="active"
-                            class="w-4 h-4 mr-2"
-                            aria-hidden="true"
-                          />
-                          Register
-                        </div>
-                      </MenuItem>
+                      <RouterLink to="/register">
+                        <MenuItem v-slot="{ active }">
+                          <div
+                            :class="[
+                              active
+                                ? 'bg-slate-100 text-slate-800'
+                                : 'text-slate-700',
+                              'group font-medium flex w-full items-center rounded-md px-2 py-2 text-sm',
+                            ]"
+                          >
+                            <NewspaperIcon
+                              :active="active"
+                              class="w-4 h-4 mr-2"
+                              aria-hidden="true"
+                            />
+                            Register
+                          </div>
+                        </MenuItem>
+                      </RouterLink>
                     </div>
-                    <div>
+                    <div v-if="isLoggedIn">
                       <MenuItem v-slot="{ active }">
                         <button
                           v-on:click="doLogout"
@@ -231,6 +233,8 @@
 </template>
 
 <script>
+import { useRootStore } from "../stores/root";
+import { mapWritableState } from "pinia";
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
 import {
   ChevronDownIcon,
@@ -241,7 +245,9 @@ import {
   ArrowRightOnRectangleIcon,
   CommandLineIcon,
 } from "@heroicons/vue/20/solid";
+
 import { RouterLink } from "vue-router";
+
 export default {
   components: {
     Menu,
@@ -265,7 +271,12 @@ export default {
       localStorage.removeItem("access_token");
       localStorage.removeItem("email");
       console.log("success logout");
+      this.$router.push("/");
+      this.isLoggedIn = false;
     },
+  },
+  computed: {
+    ...mapWritableState(useRootStore, ["isLoggedIn"]),
   },
 };
 </script>

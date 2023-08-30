@@ -20,6 +20,7 @@ export const useRootStore = defineStore('root', {
       }
 
     },
+
     async handleLogin(form) {
       try {
         const { data } = await axios({ method: "POST", url: "http://localhost:3000/login", data: form })
@@ -34,7 +35,32 @@ export const useRootStore = defineStore('root', {
 
         this.checkIsLoggedIn()
       } catch (error) {
-        console.log(error)
+        console.log(error.response.data)
+      }
+    },
+
+    async handleRegister(form) {
+      try {
+        const { data: dataRegister } = await axios({ method: "POST", url: "http://localhost:3000/register", data: form })
+
+        // console.log(dataRegister, "dataregister")
+        // if (data)
+        if (dataRegister) {
+          console.log('success register')
+
+          const { data: dataLogin } = await axios({ method: "POST", url: "http://localhost:3000/login", data: form })
+
+          localStorage.setItem('access_token', dataLogin.access_token)
+          localStorage.setItem('email', dataLogin.email)
+
+          this.$router.push('/dashboard')
+
+          console.log('success login')
+
+          this.checkIsLoggedIn()
+        }
+      } catch (error) {
+        console.log(error.response.data)
       }
     }
   },
