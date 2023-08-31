@@ -366,7 +366,111 @@
       <div class="flex flex-col py-12 md:flex-row space-y-7 md:space-y-0">
         <!-- SIDEBAR -->
         <div class="md:w-[300px] shrink-0 md:pr-8">
-          <div class="sticky inset-y-[120px]">asd</div>
+          <div class="sticky inset-y-[120px]">
+            <div class="w-full bg-white border-b rounded-xl drop-shadow">
+              <div
+                class="flex items-center justify-between px-4 py-2 border bg-gray-50 rounded-t-xl border-slate-50"
+              >
+                <div class="font-semibold">To-Do List:</div>
+              </div>
+              <hr />
+              <!-- <p class="px-4 py-4 text-sm font-semibold text-center">
+                34% done
+              </p>
+              <hr /> -->
+              <div class="flex items-center px-4 py-4 text-sm font-semibold">
+                <CheckCircleIcon :class="'w-5 h-5 mr-3'" />
+                Create Account
+              </div>
+              <hr />
+              <div class="flex items-center px-4 py-4 text-sm font-semibold">
+                <CheckCircleIcon
+                  :class="[
+                    form.name &&
+                    form.description &&
+                    form.email &&
+                    form.phoneNumber &&
+                    form.address
+                      ? ''
+                      : 'text-slate-400',
+                    'w-5 h-5 mr-3',
+                  ]"
+                />
+                Complete Basic Info
+              </div>
+              <hr />
+              <div class="flex items-center px-4 py-4 text-sm font-semibold">
+                <CheckCircleIcon
+                  :class="[
+                    form.educationTitle &&
+                    form.educationDesc &&
+                    form.educationDateFrom &&
+                    form.educationDateTo &&
+                    form.educationAccomplishment
+                      ? ''
+                      : 'text-slate-400',
+                    'w-5 h-5 mr-3',
+                  ]"
+                />
+                Add Education
+              </div>
+              <hr />
+              <div class="flex items-center px-4 py-4 text-sm font-semibold">
+                <CheckCircleIcon
+                  :class="[
+                    form.jobTitle &&
+                    form.jobDesc &&
+                    form.jobDateFrom &&
+                    form.jobDateTo &&
+                    form.jobAccomplishment
+                      ? ''
+                      : 'text-slate-400',
+                    'w-5 h-5 mr-3',
+                  ]"
+                />
+                Add Experience
+              </div>
+              <hr />
+              <div class="flex items-center px-4 py-4 text-sm font-semibold">
+                <CheckCircleIcon
+                  :class="[form.skills ? '' : 'text-slate-400', 'w-5 h-5 mr-3']"
+                />
+                Add Skills
+              </div>
+              <div
+                v-if="
+                  form.name &&
+                  form.phoneNumber &&
+                  form.email &&
+                  form.address &&
+                  form.description &&
+                  form.educationTitle &&
+                  form.educationDesc &&
+                  form.educationDateFrom &&
+                  form.educationDateTo &&
+                  form.educationAccomplishment &&
+                  form.skills &&
+                  form.jobTitle &&
+                  form.jobDesc &&
+                  form.jobDateFrom &&
+                  form.jobDateTo &&
+                  form.jobAccomplishment
+                "
+              >
+                <hr />
+                <div
+                  class="flex items-center justify-center px-4 py-4 text-sm font-semibold"
+                >
+                  <a
+                    :href="'http://localhost:3000/generate-pdf/' + form.userId"
+                    target="_blank"
+                    class="inline-flex items-center justify-center w-full px-4 py-2 text-xs font-semibold tracking-widest text-white uppercase transition duration-150 ease-in-out bg-gray-800 border border-transparent rounded-lg hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 undefined sm:w-auto"
+                    >Generate Resume</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <!-- HOME -->
         <div class="flex flex-col md:w-[70%] lg:w-[50%] space-y-8">
@@ -504,7 +608,6 @@
               </div>
             </div>
           </div>
-
           <!-- Skills -->
           <div class="w-full bg-white border-b rounded-xl drop-shadow">
             <div
@@ -634,7 +737,12 @@ import {
   ListboxOptions,
   ListboxOption,
 } from "@headlessui/vue";
-import { CheckIcon, ChevronUpDownIcon } from "@heroicons/vue/20/solid";
+import {
+  CheckIcon,
+  ChevronUpDownIcon,
+  CheckCircleIcon,
+} from "@heroicons/vue/20/solid";
+import CustomButton from "../components/CustomButton.vue";
 
 export default {
   data() {
@@ -659,6 +767,7 @@ export default {
         jobDateFrom: "",
         jobDateTo: "",
         jobAccomplishment: "",
+        userId: "",
       },
       skills: [
         { name: "Cloud Computing" },
@@ -739,6 +848,8 @@ export default {
     ListboxOption,
     CheckIcon,
     ChevronUpDownIcon,
+    CheckCircleIcon,
+    CustomButton,
   },
   async created() {
     await this.fetchResume();
@@ -759,6 +870,7 @@ export default {
       jobDateTo: this.resume.experience?.dateTo,
       jobAccomplishment: this.resume.experience?.accomplishment,
       skills: this.resume.skills,
+      userId: this.resume.userId,
     };
   },
 };
