@@ -14,10 +14,10 @@ export const useRootStore = defineStore('root', {
     checkIsLoggedIn() {
       const access_token = localStorage.access_token
       const emailUser = localStorage.email
-
       if (access_token) {
         this.isLoggedIn = true
         this.userEmail = emailUser
+        this.fetchResume()
       }
 
     },
