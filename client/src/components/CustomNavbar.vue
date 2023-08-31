@@ -135,31 +135,35 @@
                 leave-to-class="transform scale-95 opacity-0"
               >
                 <MenuItems
-                  class="absolute right-0 w-40 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                  class="absolute right-0 w-40 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                 >
                   <div class="px-1 py-1">
-                    <MenuItem v-slot="{ active }">
-                      <div
-                        :class="[
-                          active
-                            ? 'bg-slate-100 text-slate-800'
-                            : 'text-slate-700',
-                          'group font-medium flex w-full items-center rounded-md px-2 py-2 text-sm',
-                        ]"
-                      >
-                        <CommandLineIcon
-                          :active="active"
-                          class="w-4 h-4 mr-2"
-                          aria-hidden="true"
-                        />
-                        Dashboard
+                    <div v-if="isLoggedIn">
+                      <RouterLink to="/dashboard">
+                        <MenuItem v-slot="{ active }">
+                          <div
+                            :class="[
+                              active
+                                ? 'bg-slate-100 text-slate-800'
+                                : 'text-slate-700',
+                              'group font-medium flex w-full items-center rounded-md px-2 py-2 text-sm',
+                            ]"
+                          >
+                            <CommandLineIcon
+                              :active="active"
+                              class="w-4 h-4 mr-2"
+                              aria-hidden="true"
+                            />
+                            Dashboard
+                          </div>
+                        </MenuItem>
+                      </RouterLink>
+                      <div class="px-2.5" role="none">
+                        <div
+                          class="h-px w-full] my-1 block bg-gradient-to-r from-slate-400 via-slate-300"
+                          role="none"
+                        ></div>
                       </div>
-                    </MenuItem>
-                    <div class="px-2.5" role="none">
-                      <div
-                        class="h-px w-full] my-1 block bg-gradient-to-r from-slate-400 via-slate-300"
-                        role="none"
-                      ></div>
                     </div>
                     <div v-if="!isLoggedIn">
                       <RouterLink to="/login">

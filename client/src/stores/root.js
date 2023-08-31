@@ -4,7 +4,8 @@ import axios from 'axios'
 export const useRootStore = defineStore('root', {
   state: () => ({
     isLoggedIn: false,
-    userEmail: ''
+    userEmail: '',
+    resume: {}
   }),
   getters: {
     // doubleCount: (state) => state.count * 2,
@@ -62,6 +63,32 @@ export const useRootStore = defineStore('root', {
       } catch (error) {
         console.log(error.response.data)
       }
-    }
+    },
+
+    async fetchResume() {
+      try {
+        const access_token = localStorage.access_token
+        const { data } = await axios({ method: "GET", url: "http://localhost:3000/resumes", headers: { access_token } })
+        // console.log(data)
+        // console.log(access_token)
+        this.resume = data
+      } catch (error) {
+        console.log(error.response.data)
+      }
+    },
+
+    async handleSubmitIdentity(form) {
+      try {
+        // console.log(form);
+        const access_token = localStorage.access_token
+        const { data } = await axios({ method: "POST", url: "http://localhost:3000/resumes", headers: { access_token }, data: form })
+
+        this.fetchResume()
+        // console.log(data)
+        return data
+      } catch (error) {
+        console.log(error.response.data)
+      }
+    },
   },
 })

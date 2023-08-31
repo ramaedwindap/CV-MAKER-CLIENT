@@ -60,10 +60,10 @@
       </div>
     </div>
     <div
-      class="md:w-[55%] lg:w-1/2 max-w-xl mx-auto select-none cursor-none pb-4 md:py-10 lg:py-24"
+      class="md:w-[55%] lg:w-1/2 max-w-xl mx-auto select-none cursor-none pb-4"
     >
       <img
-        src="https://hcai-official.id/wp-content/uploads/2019/04/space-for-rent.png"
+        src="https://img.freepik.com/premium-vector/resume-cv-flat-icon-business-management-document-icon-vector-illustration_123447-3002.jpg?w=740"
         class="object-cover w-auto h-auto select-none"
         draggable="false"
       />
