@@ -35,6 +35,7 @@ router.beforeEach((to, from, next) => {
   if (!localStorage.access_token && to.path == '/dashboard') next('/login')
   else if (localStorage.access_token && to.path == '/login') next('/dashboard')
   else if (localStorage.access_token && to.path == '/register') next('/dashboard')
+  else if (to.path == '/') next('/login')
   else next()
 })
 
