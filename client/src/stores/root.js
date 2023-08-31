@@ -77,7 +77,7 @@ export const useRootStore = defineStore('root', {
       }
     },
 
-    async handleSubmitIdentity(form) {
+    async handleSubmitResume(form) {
       try {
         // console.log(form);
         const access_token = localStorage.access_token
