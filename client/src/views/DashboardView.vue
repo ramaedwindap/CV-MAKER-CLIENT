@@ -480,12 +480,45 @@
               class="flex items-center justify-between px-4 py-2 border lg:px-6 bg-gray-50 rounded-t-xl border-slate-50"
             >
               <div class="font-semibold">Basic Information</div>
-              <button
-                v-on:click="openModalIdentity"
-                class="inline-flex items-center justify-center px-4 py-2 -mr-2 text-xs font-semibold tracking-widest text-white uppercase transition duration-150 ease-in-out bg-gray-800 border border-transparent rounded-lg lg:-mr-4 hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 undefined"
-              >
-                Edit
-              </button>
+              <div class="flex">
+                <button
+                  v-if="form.name && form.email"
+                  v-on:click="checkIdentity(form.description)"
+                  class="mr-2 inline-flex items-center justify-center transition duration-300 bg-white hover:bg-gray-400 border border-slate-400 border-opacity-90 hover:border-gray-300 text-slate-700 hover:text-white hover:shadow-sm p-[0.4rem] lg:p-2 rounded-lg font-normal [&>svg]:w-5 [&>svg]:h-5 [&>svg]:stroke-[1.25] hover:[&>svg]:stroke-[1.4]"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="icon icon-tabler icon-tabler-artboard"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    stroke-width="2"
+                    stroke="currentColor"
+                    fill="none"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <path
+                      d="M8 8m0 1a1 1 0 0 1 1 -1h6a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-6a1 1 0 0 1 -1 -1z"
+                    ></path>
+                    <path d="M3 8l1 0"></path>
+                    <path d="M3 16l1 0"></path>
+                    <path d="M8 3l0 1"></path>
+                    <path d="M16 3l0 1"></path>
+                    <path d="M20 8l1 0"></path>
+                    <path d="M20 16l1 0"></path>
+                    <path d="M8 20l0 1"></path>
+                    <path d="M16 20l0 1"></path>
+                  </svg>
+                </button>
+                <button
+                  v-on:click="openModalIdentity"
+                  class="inline-flex items-center justify-center px-4 py-2 -mr-2 text-xs font-semibold tracking-widest text-white uppercase transition duration-150 ease-in-out bg-gray-800 border border-transparent rounded-lg lg:-mr-4 hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 undefined"
+                >
+                  Edit
+                </button>
+              </div>
             </div>
             <div class="p-4 lg:p-6">
               <div class="flex flex-col space-y-4">
@@ -496,6 +529,11 @@
                 <LabelValue
                   v-bind:label="'Description'"
                   v-bind:value="resume.identity?.description"
+                />
+                <LabelValue
+                  v-if="identityDescSuggest"
+                  v-bind:label="'Suggest Description'"
+                  v-bind:value="identityDescSuggest"
                 />
                 <LabelValue
                   v-bind:label="'Adress'"
@@ -782,7 +820,11 @@ export default {
     };
   },
   methods: {
-    ...mapActions(useRootStore, ["fetchResume", "handleSubmitResume"]),
+    ...mapActions(useRootStore, [
+      "fetchResume",
+      "handleSubmitResume",
+      "fetchRecommendOpenAi",
+    ]),
     closeModalIdentity() {
       this.isOpenModalIdentity = false;
     },
@@ -830,9 +872,14 @@ export default {
       if (res) this.closeModalExperience();
       console.log(res);
     },
+
+    checkIdentity(desc) {
+      //   console.log(desc);
+      this.fetchRecommendOpenAi(desc);
+    },
   },
   computed: {
-    ...mapState(useRootStore, ["resume"]),
+    ...mapState(useRootStore, ["resume", "identityDescSuggest"]),
   },
   components: {
     LabelValue,

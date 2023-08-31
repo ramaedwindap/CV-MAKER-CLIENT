@@ -5,7 +5,8 @@ export const useRootStore = defineStore('root', {
   state: () => ({
     isLoggedIn: false,
     userEmail: '',
-    resume: {}
+    resume: {},
+    identityDescSuggest: ""
   }),
   getters: {
     // doubleCount: (state) => state.count * 2,
@@ -36,6 +37,24 @@ export const useRootStore = defineStore('root', {
 
         this.checkIsLoggedIn()
       } catch (error) {
+        console.log(error.response.data)
+      }
+    },
+
+    async fetchRecommendOpenAi(d) {
+      try {
+        console.log(d, '>>><<')
+        const access_token = localStorage.access_token
+        const { data } = await axios({
+          method: "POST",
+          url: "http://localhost:3000/chat-openAi",
+          headers: { access_token },
+          data: { query: d }
+        })
+        // console.log(data)
+        this.identityDescSuggest = data.message.content
+      } catch (error) {
+        // console.log(error, '<>>>')
         console.log(error.response.data)
       }
     },
