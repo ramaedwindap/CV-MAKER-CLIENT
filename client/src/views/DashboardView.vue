@@ -242,6 +242,126 @@
       </Dialog>
     </TransitionRoot>
 
+    <!-- MODAL Experience -->
+    <TransitionRoot appear :show="isOpenModalExperience" as="template">
+      <Dialog as="div" @close="closeModalExperience" class="relative z-10">
+        <TransitionChild
+          as="template"
+          enter="duration-300 ease-out"
+          enter-from="opacity-0"
+          enter-to="opacity-100"
+          leave="duration-200 ease-in"
+          leave-from="opacity-100"
+          leave-to="opacity-0"
+        >
+          <div class="fixed inset-0 bg-black bg-opacity-25" />
+        </TransitionChild>
+
+        <div class="fixed inset-0 overflow-y-auto">
+          <div
+            class="flex items-center justify-center min-h-full p-4 text-center"
+          >
+            <TransitionChild
+              as="template"
+              enter="duration-300 ease-out"
+              enter-from="opacity-0 scale-95"
+              enter-to="opacity-100 scale-100"
+              leave="duration-200 ease-in"
+              leave-from="opacity-100 scale-100"
+              leave-to="opacity-0 scale-95"
+            >
+              <DialogPanel
+                class="w-full max-w-md p-4 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-xl"
+              >
+                <form v-on:submit.prevent="doSubmitExperience">
+                  <div class="flex-col mt-2 space-y-3">
+                    <div>
+                      <label
+                        class="flex items-center w-full text-sm font-semibold uppercase select-none drop-shadow-sm"
+                      >
+                        Title
+                      </label>
+                      <input
+                        required
+                        v-model="form.jobTitle"
+                        :class="[
+                          'w-full px-3 py-2 mt-2 text-sm border border-gray-300 rounded-lg shadow-sm focus:outline-none',
+                        ]"
+                      />
+                    </div>
+                    <div>
+                      <label
+                        class="flex items-center w-full text-sm font-semibold uppercase select-none drop-shadow-sm"
+                      >
+                        Description
+                      </label>
+                      <input
+                        required
+                        v-model="form.jobDesc"
+                        :class="[
+                          'w-full px-3 py-2 mt-2 text-sm border border-gray-300 rounded-lg shadow-sm focus:outline-none',
+                        ]"
+                      />
+                    </div>
+                    <div>
+                      <label
+                        class="flex items-center w-full text-sm font-semibold uppercase select-none drop-shadow-sm"
+                      >
+                        Date From
+                      </label>
+                      <input
+                        required
+                        v-model="form.jobDateFrom"
+                        :class="[
+                          'w-full px-3 py-2 mt-2 text-sm border border-gray-300 rounded-lg shadow-sm focus:outline-none',
+                        ]"
+                      />
+                    </div>
+                    <div>
+                      <label
+                        class="flex items-center w-full text-sm font-semibold uppercase select-none drop-shadow-sm"
+                      >
+                        Date To
+                      </label>
+                      <input
+                        required
+                        v-model="form.jobDateTo"
+                        :class="[
+                          'w-full px-3 py-2 mt-2 text-sm border border-gray-300 rounded-lg shadow-sm focus:outline-none',
+                        ]"
+                      />
+                    </div>
+                    <div>
+                      <label
+                        class="flex items-center w-full text-sm font-semibold uppercase select-none drop-shadow-sm"
+                      >
+                        Accomplishment
+                      </label>
+                      <input
+                        required
+                        v-model="form.jobAccomplishment"
+                        :class="[
+                          'w-full px-3 py-2 mt-2 text-sm border border-gray-300 rounded-lg shadow-sm focus:outline-none',
+                        ]"
+                      />
+                    </div>
+                  </div>
+                  <div class="flex justify-end mt-4">
+                    <button
+                      type="submit"
+                      class="inline-flex justify-center px-4 py-2 text-sm font-medium text-white uppercase border border-transparent rounded-lg drop-shadow-sm bg-slate-900 hover:bg-slate-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-500 focus-visible:ring-offset-2"
+                    >
+                      update
+                    </button>
+                  </div>
+                </form>
+              </DialogPanel>
+            </TransitionChild>
+          </div>
+        </div>
+      </Dialog>
+    </TransitionRoot>
+
     <div class="col-span-12 col-start-0">
       <div class="flex flex-col py-12 md:flex-row space-y-7 md:space-y-0">
         <!-- SIDEBAR -->
@@ -344,6 +464,7 @@
             >
               <div class="font-semibold">Professional Experience</div>
               <button
+                v-on:click="openModalExperience"
                 class="inline-flex items-center justify-center px-4 py-2 -mr-2 text-xs font-semibold tracking-widest text-white uppercase transition duration-150 ease-in-out bg-gray-800 border border-transparent rounded-lg lg:-mr-4 hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 undefined"
               >
                 Edit
@@ -383,6 +504,114 @@
               </div>
             </div>
           </div>
+
+          <!-- Skills -->
+          <div class="w-full bg-white border-b rounded-xl drop-shadow">
+            <div
+              class="flex items-center justify-between px-4 py-2 border lg:px-6 bg-gray-50 rounded-t-xl border-slate-50"
+            >
+              <div class="font-semibold">Core Competencies</div>
+              <button
+                v-on:click="updateSkills"
+                class="inline-flex items-center justify-center px-4 py-2 -mr-2 text-xs font-semibold tracking-widest text-white uppercase transition duration-150 ease-in-out bg-gray-800 border border-transparent rounded-lg lg:-mr-4 hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 undefined"
+              >
+                Update
+              </button>
+            </div>
+            <div class="p-4 lg:p-6">
+              <div class="flex flex-col space-y-4">
+                <div>
+                  <label
+                    class="flex items-center w-full text-sm font-semibold uppercase select-none drop-shadow-sm"
+                    >Skills
+                  </label>
+                  <!-- <div
+                    class="flex flex-wrap items-center gap-2 mt-2 text-xs text-blue-600"
+                  >
+                    <div
+                      class="flex overflow-hidden bg-gray-100 rounded select-none group"
+                    >
+                      <span class="px-2 py-1 font-medium text-gray-900"
+                        >Test</span
+                      >
+                    </div>
+                  </div> -->
+                  <input
+                    required
+                    v-model="form.skills"
+                    :class="[
+                      'w-full px-3 py-2 mt-2 text-sm border border-gray-300 rounded-lg shadow-sm focus:outline-none',
+                    ]"
+                  />
+                  <!-- <div class="relative w-full">
+                    <Listbox v-model="form.skills">
+                      <div class="relative mt-4">
+                        <ListboxButton
+                          class="relative w-full py-2 pl-3 pr-10 text-left bg-white border rounded-lg shadow-md cursor-default border-slate-100 focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm"
+                        >
+                          <span class="block truncate">
+                            {{ "Add new skill" }}
+                          </span>
+                          <span
+                            class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none"
+                          >
+                            <ChevronUpDownIcon
+                              class="w-5 h-5 text-gray-400"
+                              aria-hidden="true"
+                            />
+                          </span>
+                        </ListboxButton>
+
+                        <transition
+                          leave-active-class="transition duration-100 ease-in"
+                          leave-from-class="opacity-100"
+                          leave-to-class="opacity-0"
+                        >
+                          <ListboxOptions
+                            class="absolute w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-32 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+                          >
+                            <ListboxOption
+                              v-slot="{ active, selected }"
+                              v-for="skill in skills"
+                              :key="skill.name"
+                              :value="skill.name"
+                              as="template"
+                            >
+                              <li
+                                :class="[
+                                  active
+                                    ? 'bg-amber-100 text-amber-900'
+                                    : 'text-gray-900',
+                                  'relative cursor-default select-none py-2 pl-10 pr-4',
+                                ]"
+                              >
+                                <span
+                                  :class="[
+                                    selected ? 'font-medium' : 'font-normal',
+                                    'block truncate',
+                                  ]"
+                                  >{{ skill.name }}</span
+                                >
+                                <span
+                                  v-if="selected"
+                                  class="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600"
+                                >
+                                  <CheckIcon
+                                    class="w-5 h-5"
+                                    aria-hidden="true"
+                                  />
+                                </span>
+                              </li>
+                            </ListboxOption>
+                          </ListboxOptions>
+                        </transition>
+                      </div>
+                    </Listbox>
+                  </div> -->
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -399,13 +628,20 @@ import {
   Dialog,
   DialogPanel,
   DialogTitle,
+  Listbox,
+  ListboxLabel,
+  ListboxButton,
+  ListboxOptions,
+  ListboxOption,
 } from "@headlessui/vue";
+import { CheckIcon, ChevronUpDownIcon } from "@heroicons/vue/20/solid";
 
 export default {
   data() {
     return {
       isOpenModalIdentity: false,
       isOpenModalEducation: false,
+      isOpenModalExperience: false,
       form: {
         name: "",
         phoneNumber: "",
@@ -424,6 +660,16 @@ export default {
         jobDateTo: "",
         jobAccomplishment: "",
       },
+      skills: [
+        { name: "Cloud Computing" },
+        { name: "Data Analysis" },
+        { name: "Network Security" },
+        { name: "Database Management" },
+        { name: "Web Design and Development" },
+        { name: "IT Project Management" },
+        { name: "DevOps Practices" },
+        { name: "Linux Systems Administration" },
+      ],
     };
   },
   methods: {
@@ -455,6 +701,26 @@ export default {
       if (res) this.closeModalEducation();
       console.log(res);
     },
+
+    closeModalExperience() {
+      this.isOpenModalExperience = false;
+    },
+    openModalExperience() {
+      this.isOpenModalExperience = true;
+    },
+    async doSubmitExperience() {
+      //   console.log(this.form);
+      //   console.log("click");
+      const res = await this.handleSubmitResume(this.form);
+      if (res) this.closeModalExperience();
+      console.log(res);
+    },
+
+    async updateSkills() {
+      const res = await this.handleSubmitResume(this.form);
+      if (res) this.closeModalExperience();
+      console.log(res);
+    },
   },
   computed: {
     ...mapState(useRootStore, ["resume"]),
@@ -466,6 +732,13 @@ export default {
     Dialog,
     DialogPanel,
     DialogTitle,
+    Listbox,
+    ListboxLabel,
+    ListboxButton,
+    ListboxOptions,
+    ListboxOption,
+    CheckIcon,
+    ChevronUpDownIcon,
   },
   async created() {
     await this.fetchResume();
