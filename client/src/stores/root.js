@@ -55,19 +55,35 @@ export const useRootStore = defineStore('root', {
 
     async fetchRecommendOpenAi(d) {
       try {
-        console.log(d, '>>><<')
+        // console.log(d, '>>><<')
+        if (!d.trim()) {
+          return this.toast("You need to insert description information!", "danger")
+        }
+
         const access_token = localStorage.access_token
+
+        const query = `
+        I create a website to generate a CV, 
+        and I want you to alter this sentences more efficient and more attract to HR with 100 words only,
+
+        here is the sentence:
+        \`\`\`
+            ${d}
+        \`\`\`
+        `
+
         const { data } = await axios({
           method: "POST",
           url: "http://localhost:3000/chat-openAi",
           headers: { access_token },
-          data: { query: d }
+          data: { query }
         })
         // console.log(data)
         this.identityDescSuggest = data.message.content
       } catch (error) {
         // console.log(error, '<>>>')
-        console.log(error.response.data)
+        console.log(error.response)
+        console.log(error)
       }
     },
 
