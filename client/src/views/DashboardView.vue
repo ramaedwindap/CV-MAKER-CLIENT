@@ -836,7 +836,7 @@ export default {
       //   console.log("click");
       const res = await this.handleSubmitResume(this.form);
       if (res) this.closeModalIdentity();
-      console.log(res);
+      // console.log(res);
     },
 
     closeModalEducation() {
@@ -850,7 +850,7 @@ export default {
       //   console.log("click");
       const res = await this.handleSubmitResume(this.form);
       if (res) this.closeModalEducation();
-      console.log(res);
+      // console.log(res);
     },
 
     closeModalExperience() {
@@ -864,13 +864,13 @@ export default {
       //   console.log("click");
       const res = await this.handleSubmitResume(this.form);
       if (res) this.closeModalExperience();
-      console.log(res);
+      // console.log(res);
     },
 
     async updateSkills() {
       const res = await this.handleSubmitResume(this.form);
       if (res) this.closeModalExperience();
-      console.log(res);
+      // console.log(res);
     },
 
     checkIdentity(desc) {

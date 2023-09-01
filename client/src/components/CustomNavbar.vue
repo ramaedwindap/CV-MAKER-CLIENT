@@ -277,10 +277,12 @@ export default {
       console.log("success logout");
       this.$router.push("/");
       this.isLoggedIn = false;
+      // console.log(this.resume);
+      this.resume = {};
     },
   },
   computed: {
-    ...mapWritableState(useRootStore, ["isLoggedIn"]),
+    ...mapWritableState(useRootStore, ["isLoggedIn", "resume"]),
   },
 };
 </script>

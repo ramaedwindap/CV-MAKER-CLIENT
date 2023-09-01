@@ -1,5 +1,8 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
+import { createToast } from "mosha-vue-toastify";
+// import the styling for the toast
+import "mosha-vue-toastify/dist/style.css";
 
 export const useRootStore = defineStore('root', {
   state: () => ({
@@ -18,9 +21,15 @@ export const useRootStore = defineStore('root', {
       if (access_token) {
         this.isLoggedIn = true
         this.userEmail = emailUser
-        this.fetchResume()
       }
+    },
 
+    toast(message, type) {
+      createToast(message,
+        {
+          showIcon: true,
+          type,
+        })
     },
 
     async handleLogin(form) {
@@ -33,10 +42,13 @@ export const useRootStore = defineStore('root', {
 
         this.$router.push('/dashboard')
 
-        console.log('success login')
+        // console.log('success login')
 
         this.checkIsLoggedIn()
+
+        this.toast("Success login", 'success')
       } catch (error) {
+        this.toast(error.response.data.message, 'danger')
         console.log(error.response.data)
       }
     },
@@ -65,6 +77,7 @@ export const useRootStore = defineStore('root', {
 
         // console.log(dataRegister, "dataregister")
         // if (data)
+        this.toast("Success register", 'success')
         if (dataRegister) {
           console.log('success register')
 
@@ -78,8 +91,11 @@ export const useRootStore = defineStore('root', {
           console.log('success login')
 
           this.checkIsLoggedIn()
+
+          this.toast("Success login", 'success')
         }
       } catch (error) {
+        this.toast("Failed register", 'danger')
         console.log(error.response.data)
       }
     },
@@ -92,7 +108,11 @@ export const useRootStore = defineStore('root', {
         // console.log(access_token)
         this.resume = data
       } catch (error) {
+        // createToast('Gagal fetch')
         console.log(error.response.data)
+        if (error.response.data.message == "Not found!") {
+          this.toast("Please input your data")
+        }
       }
     },
 
@@ -104,8 +124,10 @@ export const useRootStore = defineStore('root', {
 
         this.fetchResume()
         // console.log(data)
+        this.toast(data.message, 'success')
         return data
       } catch (error) {
+        this.toast(error.response.data.message, 'success')
         console.log(error.response.data)
       }
     },
